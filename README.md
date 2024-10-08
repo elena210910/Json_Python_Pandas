@@ -21,10 +21,11 @@ Vemos que los datos están bien formateados. Ahora necesitamos obtener las clave
 Ahora que conocemos las claves principales donde pueden estar los datos que necesitamos, pasemos a Python y usemos las bibliotecas ijson y pandas.
 Dado que suponemos que nuestro archivo no cabe en la memoria RAM, no podemos simplemente leerlo usando la biblioteca json. En su lugar, lo leeremos secuencialmente, ahorrando memoria.
 
-Lo haremos utilizando el paquete ijson, que analizará el archivo JSON de manera iterativa en lugar de cargarlo todo en la memoria de una vez. Esto es más lento que la lectura directa en memoria, pero nos permite trabajar con archivos grandes que no caben en la memoria.
+Lo hare utilizando el paquete ijson, que analizará el archivo JSON de manera iterativa en lugar de cargarlo todo en la memoria de una vez. Esto es más lento que la lectura directa en memoria, pero me permite trabajar con los archivos grandes que no caben en la memoria.
 
 [Aqui esta el codico de Python](https://github.com/elena210910/Json_Python_Pandas/blob/main/code_python) 
 
+*RESUMEN del codico:*
 Extraímos los nombres de las columnas: Usando la clave meta, obtuvimos los nombres de todas las columnas para saber qué datos están disponibles.
 Seleccionamos las columnas necesarias: Decidimos cuáles columnas nos interesan para el análisis.
 Leímos los datos línea por línea: Con ijson, leímos los datos de la clave data de manera secuencial para no cargar todo el archivo en la memoria.
