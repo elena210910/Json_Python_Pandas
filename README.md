@@ -12,11 +12,11 @@ Lamentablemente, la estructura del archivo JSON no la conocemos de antemano.
 Primero, veremos las primeras líneas del archivo air_quality_nyc.
 Dado que un archivo JSON es un archivo de texto común, podemos usar un comando de línea de comandos para esto.
 
-![](https://github.com/elena210910/Json_Python_Pandas/blob/main/bash1.PNG)
+![](https://github.com/elena210910/Json_Python_Pandas/blob/main/bash_1.PNG)
 
 Vemos que los datos están bien formateados. Ahora necesitamos obtener las claves de primer nivel.
  
-![](https://github.com/elena210910/Json_Python_Pandas/blob/main/bash2.PNG)
+![](https://github.com/elena210910/Json_Python_Pandas/blob/main/bash_2.PNG)
 
 Ahora que conocemos las claves principales donde pueden estar los datos que necesitamos, pasemos a Python y usemos las bibliotecas ijson y pandas.
 Dado que suponemos que nuestro archivo no cabe en la memoria RAM, no podemos simplemente leerlo usando la biblioteca json. En su lugar, lo leeremos secuencialmente, ahorrando memoria.
@@ -26,12 +26,17 @@ Lo hare utilizando el paquete ijson, que analizará el archivo JSON de manera it
 [Aqui esta el codico de Python](https://github.com/elena210910/Json_Python_Pandas/blob/main/code_python) 
 
 *RESUMEN del codico:*
+
 Extraímos los nombres de las columnas: Usando la clave meta, obtuvimos los nombres de todas las columnas para saber qué datos están disponibles.
+
 Seleccionamos las columnas necesarias: Decidimos cuáles columnas nos interesan para el análisis.
 Leímos los datos línea por línea: Con ijson, leímos los datos de la clave data de manera secuencial para no cargar todo el archivo en la memoria.
 Creamos un DataFrame: Convertimos los datos leídos en una tabla pandas para facilitar el análisis.
+
 Analizamos los datos: Filtramos los datos para PM 2.5, encontramos el área más contaminada y calculamos los valores medios por área.
+
 Construimos un gráfico: Visualizamos las 10 áreas más contaminadas usando matplotlib y seaborn.
+
 
 ![](https://github.com/elena210910/Json_Python_Pandas/blob/main/10_top.png)
 
