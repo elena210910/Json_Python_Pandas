@@ -11,15 +11,15 @@ Lamentablemente, la estructura del archivo JSON no la conocemos de antemano.
 Primero, veremos las primeras líneas del archivo.
 Dado que un archivo JSON es un archivo de texto común, también utilizamos comandos de línea de comandos como **curl** para obtener los datos directamente desde la web y **jq** para visualizar y manipular el contenido JSON, permitiendo extraer fácilmente las claves o secciones necesarias.
 
-![](https://github.com/elena210910/Json_Python_Pandas/blob/main/bash_1.PNG)
+![](https://github.com/elena210910/Json_Python_Pandas/blob/main/shell_1.PNG)
 
 Vemos que los datos están bien formateados. Ahora necesitamos obtener las claves de primer nivel.
  
-![](https://github.com/elena210910/Json_Python_Pandas/blob/main/bash_2.PNG)
+![](https://github.com/elena210910/Json_Python_Pandas/blob/main/shell_2.PNG)
 
 Buscaremos donde pueden estar la columnas.
 
-![](https://github.com/elena210910/Json_Python_Pandas/blob/main/bash_3.PNG)
+![](https://github.com/elena210910/Json_Python_Pandas/blob/main/shell_3.PNG)
 
 Ahora que conocemos las claves principales donde pueden estar los datos que necesitamos, pasemos a Python y usemos las bibliotecas ijson y pandas.
 Dado que suponemos que nuestro archivo no cabe en la memoria RAM, no podemos simplemente leerlo usando la biblioteca json. En su lugar, lo leeremos secuencialmente, ahorrando memoria.
