@@ -1,0 +1,57 @@
+import pandas as pd
+import ijson
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+filename = 'C:/your_path/Escritorio/air_quality_nyc.json'
+
+# Extraer nombres de columnas
+with open(filename, 'r') as f:
+    objects = ijson.items(f, 'meta.view.columns.item')
+    columns = list(objects)
+column_names = [col['fieldName'] for col in columns] # Para obtener los nombres de las columnas, es mejor orientarse por el valor de la clave fieldName
+
+
+# Seleccionar columnas que nos pueden interesar para el análisis
+good_columns = ['unique_id', 'name', 'measure', 'measure_info', 'geo_type_name',
+                'geo_place_name', 'time_period', 'start_date', 'data_value']
+
+# Crear una lista vacía para almacenar las filas de datos
+data = []
+with open(filename, 'r') as f: 
+    objects = ijson.items(f, 'data.item')  # leer el JSON línea por línea
+    for row in objects:  # Iterar sobre cada fila de datos
+        selected_row = []  # Crear una lista vacía para los valores seleccionados de la fila actual
+        for item in good_columns:  # Iterar sobre la lista de columnas de interés
+            selected_row.append(row[column_names.index(item)])  # Busco el índice de la columna deseada en column_names y agregar su valor a selected_row
+        data.append(selected_row)  
+#print(data[0])  
+   
+# Y por fin Crear DataFrame
+df = pd.DataFrame(data, columns=good_columns)
+df = df.drop_duplicates()
+
+# Filtrar y procesar datos
+df['data_value'] = pd.to_numeric(df['data_value'], errors='coerce')
+pm25_data = df[(df['name'] == 'Fine particles (PM 2.5)') & (df['measure_info'].isin(['mcg/m3', 'µg/m3']))]
+
+# Encontrar el área más contaminada
+most_polluted_pm25 = pm25_data.loc[pm25_data['data_value'].idxmax()]
+print("Área más contaminada (PM 2.5):", most_polluted_pm25['geo_place_name'])
+print("Concentración de PM 2.5:", most_polluted_pm25['data_value'], "mcg/m3")
+print("Período:", most_polluted_pm25['time_period'])
+
+# Agrupar y ordenar datos
+grouped_pm25 = pm25_data.groupby('geo_place_name').agg({'data_value': 'mean'}).reset_index()
+sorted_pm25 = grouped_pm25.sort_values(by='data_value', ascending=False).reset_index(drop=True)
+
+# Visualizamos los resultados
+top_10_pm25 = sorted_pm25.head(10)
+plt.figure(figsize=(10, 6))
+sns.barplot(data=top_10_pm25, x='geo_place_name', y='data_value', palette='viridis')
+plt.title('10 áreas más contaminadas por concentración media de PM 2.5')
+plt.xlabel('Área')
+plt.ylabel('Concentración media de PM 2.5 (mcg/m³)')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
